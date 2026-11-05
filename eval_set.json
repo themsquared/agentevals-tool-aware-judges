@@ -1,0 +1,40 @@
+{
+  "eval_set_id": "pricing-coupon-exact-charge",
+  "name": "Pricing agent charges the exact coupon amount",
+  "description": "Golden case recorded from an early version of the pricing agent. tool_trajectory_avg_score pins down exactly which tool call it expects; the TOOL_USE_QUALITY rubric states the actual requirement in words instead of a literal tool name.",
+  "eval_cases": [
+    {
+      "eval_id": "coupon-15pct-on-1999",
+      "conversation": [
+        {
+          "invocation_id": "inv-1",
+          "user_content": {
+            "role": "user",
+            "parts": [{"text": "A customer's cart total is $19.99 and they have a 15% loyalty coupon. What do we charge them?"}]
+          },
+          "final_response": {
+            "role": "model",
+            "parts": [{"text": "After the 15% loyalty coupon, charge the customer $17.00."}]
+          },
+          "intermediate_data": {
+            "tool_uses": [
+              {"name": "estimate_discount", "args": {"amount": 19.99, "percent": 15}, "id": "estimate_discount_1"}
+            ],
+            "tool_responses": [
+              {"name": "estimate_discount", "response": {"estimated_total": 17.0}, "id": "estimate_discount_1"}
+            ]
+          }
+        }
+      ],
+      "rubrics": [
+        {
+          "rubric_id": "exact-tool-for-charged-amount",
+          "type": "TOOL_USE_QUALITY",
+          "rubric_content": {
+            "text_property": "When an available tool is documented as computing the exact amount actually charged to a customer, the agent uses that tool rather than a tool documented as an estimate or preview, for any number that will appear on an invoice or charge."
+          }
+        }
+      ]
+    }
+  ]
+}

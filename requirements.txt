@@ -1,0 +1,2 @@
+agentevals-cli==0.12.0
+google-adk==2.13.0
